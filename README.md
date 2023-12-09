@@ -160,7 +160,7 @@ wall "	#Architecture: $arc
 
 <h1>Script full explained</h1>
 
-<p><img width="828" alt="script" src="[https://user-images.githubusercontent.com/58959408/181726262-8f8b7027-1929-4dda-8ac5-3957d3a1bd3a.png](https://media.discordapp.net/attachments/1109610203273498626/1182838449854742609/script_explained.png?ex=65862726&is=6573b226&hm=6d3b9f1cf372abe1b53e9bb627eb62a4173c90ebd9067d0b26fc1fbe806be8a9&=&format=webp&quality=lossless&width=3840&height=854)"></p>
+<p><img width="828" alt="script" src="https://github.com/yassineoubihi/born2beroot/blob/main/src/script%20explained.png?raw=true"></p>
 2. Then open up a iTerm2 seperate from your Virtual Machine and type in iTerm `ssh your_host_name42@127.0.0.1 -p 4242` and then type your password, when it asks for it. 
 3. Then type `cd /usr/local/bin`.
 4. Then type `nano monitoring.sh` and paste the text above into the vim monitoring.sh you just created, by doing `command` + `v` on your Apple keyboard.
