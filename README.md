@@ -1,4 +1,4 @@
-## Part 1 - Configurating Your Virtual Machine
+![tldraw com-tldraw(2)](https://github.com/yassineoubihi/born2beroot/assets/139509742/e752ac45-8c81-499e-9d84-609db813e8b7)## Part 1 - Configurating Your Virtual Machine
 
 ### Part 1.1 - Installing Sudo
 
@@ -127,22 +127,23 @@ Defaults	requiretty
 ```
 #!/bin/bash
 arc=$(uname -a)
-pcpu=$(grep "physical id" /proc/cpuinfo | sort | uniq | wc -l) 
+pcpu=$(grep "physical id" /proc/cpuinfo | sort | uniq | wc -l)
 vcpu=$(grep "^processor" /proc/cpuinfo | wc -l)
 fram=$(free -m | awk '$1 == "Mem:" {print $2}')
 uram=$(free -m | awk '$1 == "Mem:" {print $3}')
 pram=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
-fdisk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}')
-udisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}')
-pdisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')
-cpul=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}')
+fdisk=$(df -Bg | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}')
+udisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}')
+pdisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')
+cpul=$(awk '/^cpu / {usage=100-($5+$6)*100/($2+$3+$4+$5+$6)} END {printf "%.1f%%\n", usage}' /proc/stat)
 lb=$(who -b | awk '$1 == "system" {print $3 " " $4}')
-lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo no; else echo yes; fi)
-ctcp=$(ss -neopt state established | wc -l)
+lvmt=$(lsblk | grep "lvm" | wc -l)
+lvmu=$(if [ $lvmt -eq 0 ]; then echo no; else echo yes; fi)
+ctcp=$(cat /proc/net/sockstat{,6} | awk '$1 == "TCP:" {print $3}')
 ulog=$(users | wc -w)
 ip=$(hostname -I)
-mac=$(ip link show | grep "ether" | awk '{print $2}')
-cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+mac=$(ip link show | awk '$1 == "link/ether" {print $2}')
+cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l) # journalctl should be running as sudo but our script is running as root so we don't need in sudo here
 wall "	#Architecture: $arc
 	#CPU physical: $pcpu
 	#vCPU: $vcpu
@@ -151,11 +152,15 @@ wall "	#Architecture: $arc
 	#CPU load: $cpul
 	#Last boot: $lb
 	#LVM use: $lvmu
-	#Connections TCP: $ctcp ESTABLISHED
+	#Connexions TCP: $ctcp ESTABLISHED
 	#User log: $ulog
 	#Network: IP $ip ($mac)
-	#Sudo: $cmds cmd"
+	#Sudo: $cmds cmd" # broadcast our system information on all terminals
 ```
+
+<h1>Script full explained</h1>
+
+<img width="828" alt="script" src="[https://user-images.githubusercontent.com/58959408/181726262-8f8b7027-1929-4dda-8ac5-3957d3a1bd3a.png](https://media.discordapp.net/attachments/1109610203273498626/1182838449854742609/script_explained.png?ex=65862726&is=6573b226&hm=6d3b9f1cf372abe1b53e9bb627eb62a4173c90ebd9067d0b26fc1fbe806be8a9&=&format=webp&quality=lossless&width=3840&height=854)">
 2. Then open up a iTerm2 seperate from your Virtual Machine and type in iTerm `ssh your_host_name42@127.0.0.1 -p 4242` and then type your password, when it asks for it. 
 3. Then type `cd /usr/local/bin`.
 4. Then type `nano monitoring.sh` and paste the text above into the vim monitoring.sh you just created, by doing `command` + `v` on your Apple keyboard.
