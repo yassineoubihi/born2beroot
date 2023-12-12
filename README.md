@@ -9,7 +9,7 @@
 5. Then type `usermod -aG sudo your_username` to add user in the sudo group (To check if user is in sudo group, type `getent group sudo`)
 6. Type `sudo visudo` to open sudoers file
 7. Lastly find - # User privilege specification, type `your_username  	ALL=(ALL) ALL`
-<p><img width="828" alt="script" src="https://github.com/yassineoubihi/born2beroot/blob/main/src/script%20explained.png?raw=true"></p>
+<p><img width="828" alt="script" src="[https://github.com/yassineoubihi/born2beroot/blob/main/src/script%20explained.png?raw=true](https://github.com/yassineoubihi/born2beroot/blob/main/src/Screen%20Shot%202023-12-12%20at%201.16.57%20AM.png?raw=true)"></p>
 
 ### Part 1.2 - Installing Git and Vim
 
