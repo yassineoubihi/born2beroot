@@ -32,9 +32,8 @@
 1. First type `apt-get install ufw` to install UFW
 2. Type `sudo ufw enable` to inable UFW
 3. Type `sudo ufw status numbered` to check the status of UFW
-4. Type `sudo ufw allow ssh` to configure the Rules
-5. Type `sudo ufw allow 4242` to configure the Port Rules
-6. Lastly Type `sudo ufw status numbered` to check the status of UFW 4242 Port
+4. Type `sudo ufw allow 4242` to configure the Port Rules
+5. Lastly Type `sudo ufw status numbered` to check the status of UFW 4242 Port
 
 
 ## Part 2 Connecting to SSH
